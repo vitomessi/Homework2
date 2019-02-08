@@ -43,7 +43,10 @@ public class RestApiRM {
     public RestApiRM() {
         
     }
-    
+    /**
+     * get di tutti i valori
+     * @return tutti i valori nel database
+     */
     @GET
     @Path("/getAll")
     @Produces(MediaType.TEXT_PLAIN)
@@ -59,7 +62,11 @@ public class RestApiRM {
       return "[]";
      }
      
-     
+    /**
+     * restituzione di tutti i valori che hanno un determinato nome
+     * @param name
+     * @return 
+     */ 
     @GET
     @Path("/getOp/{name}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -77,6 +84,11 @@ public class RestApiRM {
        return "[]";
     }
     
+    /**
+     * restituzione ordinata di tutti i valori di una determinata operazione
+     * @param name
+     * @return tutte le operazioni di uno stesso tipo, ordinata per id
+     */
     @GET
     @Path("/getOrd/{name}")
     @Produces(MediaType.TEXT_PLAIN)
