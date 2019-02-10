@@ -107,10 +107,11 @@ public class RestApiRM {
     }
     
     @POST
+    @Path("/add/{id}/{name}/{value}")
     @Consumes(MediaType.TEXT_PLAIN)
-    public void add(){
-       
-        replicaManager.addOp();
+    public void add(@PathParam("id") String id, @PathParam("name") String name, @PathParam("value") float value){
+        Operation op = new Operation(Integer.parseInt(id), name, value);
+        replicaManager.addOp(op);
         
     }
     

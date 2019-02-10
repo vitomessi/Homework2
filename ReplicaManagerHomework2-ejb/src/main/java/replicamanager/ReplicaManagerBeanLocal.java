@@ -19,5 +19,5 @@ public interface ReplicaManagerBeanLocal {
     public List<Operation> getOperations();
     public List<Operation> getOperation(String name);
     public List<Operation> getOrdered(String name);
-    public int addOp();
+    public int addOp(Operation op);
 }

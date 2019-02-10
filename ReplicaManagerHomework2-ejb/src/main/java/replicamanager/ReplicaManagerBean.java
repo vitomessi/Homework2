@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import util.Operation;
@@ -23,7 +24,7 @@ import util.Operation;
  *
  * @author INGRAITI_MESSINA
  */
-@Stateless
+@Singleton
 @Startup
 public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
 
@@ -200,14 +201,14 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
     
     
     @Override
-    public int addOp() {
+    public int addOp(Operation op) {
         ResultSet rs = null;
         Statement st = null;
         int ret = 0;
         try {
             this.connect();
             st = connection.createStatement();
-            ret = st.executeUpdate("INSERT INTO operazioni (id, name, value) VALUES (7, 'avg', 1.6)");
+            ret = st.executeUpdate("INSERT INTO operazioni (id, name, value) VALUES (" + op.getId() + "','" + op.getName()+ "','" + op.getValue() + "')");
         } catch (SQLException ex) {
             Logger.getLogger(ReplicaManagerBean.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
