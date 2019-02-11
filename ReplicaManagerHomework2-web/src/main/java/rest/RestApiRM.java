@@ -43,6 +43,13 @@ public class RestApiRM {
     public RestApiRM() {
         
     }
+    
+    @GET
+    @Path("/sendAck") 
+    @Produces(MediaType.TEXT_PLAIN)
+    public String sendAck() {
+        return  replicaManager.sendAck();
+    }
     /**
      * get di tutti i valori
      * @return tutti i valori nel database

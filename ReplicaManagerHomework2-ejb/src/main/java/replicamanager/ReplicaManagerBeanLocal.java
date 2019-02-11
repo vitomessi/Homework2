@@ -20,4 +20,5 @@ public interface ReplicaManagerBeanLocal {
     public List<Operation> getOperation(String name);
     public List<Operation> getOrdered(String name);
     public int addOp(Operation op);
+    public String sendAck();
 }

@@ -223,4 +223,8 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
         }
         return ret;
     }
+    @Override
+    public String sendAck(){
+        return "STATUS_OK_200";     
+    }
 }
