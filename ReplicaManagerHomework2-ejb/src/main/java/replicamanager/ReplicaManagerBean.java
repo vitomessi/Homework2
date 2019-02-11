@@ -208,7 +208,8 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
         try {
             this.connect();
             st = connection.createStatement();
-            ret = st.executeUpdate("INSERT INTO operazioni (id, name, value) VALUES (" + op.getId() + "','" + op.getName()+ "','" + op.getValue() + "')");
+            ret = st.executeUpdate("INSERT INTO operazioni (id, name, value) VALUES ('" + op.getId() + "','" 
+                    + op.getName()+ "','" + op.getValue() + "')");
         } catch (SQLException ex) {
             Logger.getLogger(ReplicaManagerBean.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
