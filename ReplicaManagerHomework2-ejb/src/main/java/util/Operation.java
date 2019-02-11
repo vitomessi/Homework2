@@ -14,23 +14,18 @@ import java.util.Objects;
  */
 public class Operation implements Serializable{
     
-    private int id;
+    
     private String name;
     private float value;
 
-    public Operation(int id, String name, float value) {
-        this.id = id;
+    public Operation(String name, float value) {
+       
         this.name = name;
         this.value = value;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public String getName() {
         return name;
@@ -49,17 +44,16 @@ public class Operation implements Serializable{
     }
 
     @Override
-    public String toString() {
-        return "Operation{" + "id=" + id + ", name=" + name + ", value=" + value + '}';
-    }
-
-    @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.id;
+        int hash = 3;
         hash = 79 * hash + Objects.hashCode(this.name);
         hash = 79 * hash + Float.floatToIntBits(this.value);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "Operation{" + "name=" + name + ", value=" + value + '}';
     }
 
     @Override
@@ -74,9 +68,6 @@ public class Operation implements Serializable{
             return false;
         }
         final Operation other = (Operation) obj;
-        if (this.id != other.id) {
-            return false;
-        }
         if (Float.floatToIntBits(this.value) != Float.floatToIntBits(other.value)) {
             return false;
         }
@@ -85,6 +76,11 @@ public class Operation implements Serializable{
         }
         return true;
     }
+
+   
+
+
+  
     
     
 }

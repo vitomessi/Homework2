@@ -93,7 +93,6 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
             while (rs.next())
             {
                 list.add( new Operation(
-                        rs.getInt("Id"),
                         rs.getString("Name"),
                         rs.getFloat("Value")
                 ));        
@@ -134,7 +133,6 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
             rs = st.executeQuery("SELECT * FROM operazioni WHERE name = '" + name + "'");
             while(rs.next()) {
                 ret.add(new Operation(
-                        rs.getInt("Id"),
                         rs.getString("Name"),
                         rs.getFloat("Value")
                 ));
@@ -169,10 +167,9 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
         try {
             this.connect();
             st = connection.createStatement();
-            rs = st.executeQuery("SELECT * FROM operazioni WHERE name = '" + name + "'" + "ORDER BY id ASC");
+            rs = st.executeQuery("SELECT * FROM operazioni WHERE name = '" + name + "'" + "ORDER BY value ASC");
             while(rs.next()) {
                 ret.add(new Operation(
-                        rs.getInt("Id"),
                         rs.getString("Name"),
                         rs.getFloat("Value")
                 ));
@@ -208,8 +205,7 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
         try {
             this.connect();
             st = connection.createStatement();
-            ret = st.executeUpdate("INSERT INTO operazioni (id, name, value) VALUES ('" + op.getId() + "','" 
-                    + op.getName()+ "','" + op.getValue() + "')");
+            ret = st.executeUpdate("INSERT INTO operazioni (name, value) VALUES ('" +  op.getName()+ "','" + op.getValue() + "')");
         } catch (SQLException ex) {
             Logger.getLogger(ReplicaManagerBean.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
