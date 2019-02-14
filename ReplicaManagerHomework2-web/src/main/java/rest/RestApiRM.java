@@ -20,6 +20,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
@@ -55,7 +57,7 @@ public class RestApiRM {
      * @return tutti i valori nel database
      */
     @GET
-    @Path("/getAll")
+    @Path("/all")
     @Produces(MediaType.TEXT_PLAIN)
      public String getAll() {
          List<Operation> list = replicaManager.getOperations();
@@ -75,7 +77,7 @@ public class RestApiRM {
      * @return 
      */ 
     @GET
-    @Path("/getOp/{name}")
+    @Path("/op/{name}")
     @Produces(MediaType.TEXT_PLAIN)
     public String getOp(@PathParam("name") String name)
     {
@@ -97,7 +99,7 @@ public class RestApiRM {
      * @return tutte le operazioni di uno stesso tipo, ordinata per id
      */
     @GET
-    @Path("/getOrd/{name}")
+    @Path("/ord/{name}")
     @Produces(MediaType.TEXT_PLAIN)
     public String getOrdered(@PathParam("name") String name)
     {
@@ -114,10 +116,12 @@ public class RestApiRM {
     }
     
     @POST
-    @Path("/add/{name}/{value}")
+    @Path("/add")
     @Consumes(MediaType.TEXT_PLAIN)
-    public void add(@PathParam("name") String name, @PathParam("value") float value){
+    public void add(String name, String value){
         Operation op = new Operation(name,value);
+        //Client client = ClientBuilder.newClient(); 
+        //client.target("http://localhost:8080/ReaderWriter-web/risorse/writer/add").path(name).path(value).request(MediaType.TEXT_PLAIN).get(String.class);
         replicaManager.addOp(op);
         
     }

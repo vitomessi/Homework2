@@ -29,7 +29,7 @@ import util.Operation;
 public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
 
     private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/homework?useUnicode=yes&characterEncoding=utf8&autoReconnect=true&verifyServerCertificate=false&useSSL=false";
+    private static final String DATABASE_URL = "jdbc:mysql://db:3306/homework?useUnicode=yes&characterEncoding=utf8&autoReconnect=true&verifyServerCertificate=false&useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     
@@ -94,7 +94,7 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
             {
                 list.add( new Operation(
                         rs.getString("Name"),
-                        rs.getFloat("Value")
+                        rs.getString("Value")
                 ));        
             }
         } catch (SQLException ex) {
@@ -134,7 +134,7 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
             while(rs.next()) {
                 ret.add(new Operation(
                         rs.getString("Name"),
-                        rs.getFloat("Value")
+                        rs.getString("Value")
                 ));
             }
             
@@ -167,11 +167,11 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
         try {
             this.connect();
             st = connection.createStatement();
-            rs = st.executeQuery("SELECT * FROM operazioni WHERE name = '" + name + "'" + "ORDER BY value ASC");
+            rs = st.executeQuery("SELECT * FROM operazioni WHERE name = '" + name + "'" + "ORDER BY value");
             while(rs.next()) {
                 ret.add(new Operation(
                         rs.getString("Name"),
-                        rs.getFloat("Value")
+                        rs.getString("Value")
                 ));
             }
             

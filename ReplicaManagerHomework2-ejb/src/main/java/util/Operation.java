@@ -16,9 +16,9 @@ public class Operation implements Serializable{
     
     
     private String name;
-    private float value;
+    private String value;
 
-    public Operation(String name, float value) {
+    public Operation(String name, String value) {
        
         this.name = name;
         this.value = value;
@@ -35,21 +35,23 @@ public class Operation implements Serializable{
         this.name = name;
     }
 
-    public float getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 5;
         hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Float.floatToIntBits(this.value);
+        hash = 79 * hash + Objects.hashCode(this.value);
         return hash;
     }
+
+    
 
     @Override
     public String toString() {
@@ -68,15 +70,16 @@ public class Operation implements Serializable{
             return false;
         }
         final Operation other = (Operation) obj;
-        if (Float.floatToIntBits(this.value) != Float.floatToIntBits(other.value)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.value, other.value)) {
             return false;
         }
         return true;
     }
 
+    
    
 
 
