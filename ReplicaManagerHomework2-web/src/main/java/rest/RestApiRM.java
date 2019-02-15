@@ -140,9 +140,12 @@ public class RestApiRM {
         replicaManager.addOp(op);
      
     }
-    
+    /**
+     * Receive an abort from writer
+     * @param log 
+     */
     @POST
-    @Path("/sendAbort")
+    @Path("/abort")
     @Consumes(MediaType.TEXT_PLAIN)
     public void sendAbort(String log)
     {
@@ -153,18 +156,16 @@ public class RestApiRM {
     }
     
     
-    
+    /**
+     * add statistics in a log file
+     * @param u
+     * @return 
+     */
     @POST
     @Path("/addLog")
     @Consumes(MediaType.TEXT_PLAIN)
     public Response addLog(String u){
-        
-        //String result = "" + op;
-        
-        boolean result = replicaManager.printLog(u);
-        
-        
-            
+        boolean result = replicaManager.printLog(u);    
         return Response.status(200).entity(result).build();
     }
     
