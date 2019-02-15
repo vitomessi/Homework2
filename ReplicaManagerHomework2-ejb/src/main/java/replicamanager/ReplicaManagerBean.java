@@ -33,13 +33,19 @@ import util.Operation;
 @Singleton
 @Startup
 public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
-
+//private static String DB_NAME = "db";
+//List<String> db_name = new ArrayList<String>();
     private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DATABASE_URL = "jdbc:mysql://db:3306/homework?useUnicode=yes&characterEncoding=utf8&autoReconnect=true&verifyServerCertificate=false&useSSL=false";
+  // 
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     private static final String FILENAME = "src/Log.log";
      // init connection object
+    /*for(int i = 0; i < 5; ++i ) {
+            db_name.add(DB_NAME + "-" + Integer.toString(i) );
+    
+        }*/
     private Connection connection;
     // init properties object
     private Properties properties;
@@ -70,7 +76,16 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
     private void connect() {
         if (connection == null) {
             try {
+                /*
+                for (int i = 0; i<5; i++){
                 Class.forName(DATABASE_DRIVER);
+                
+                connection = DriverManager.getConnection("jdbc:mysql://" + db_name[i] + ":3306/homework?useUnicode=yes&characterEncoding=utf8&autoReconnect=true&verifyServerCertificate=false&useSSL=false", getProperties());
+                }
+                */
+                Class.forName(DATABASE_DRIVER);
+                
+                //connection = DriverManager.getConnection(DATABASE_URL, getProperties());
                 connection = DriverManager.getConnection(DATABASE_URL, getProperties());
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
