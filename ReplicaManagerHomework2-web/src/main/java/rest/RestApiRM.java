@@ -7,6 +7,7 @@ package rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,6 +25,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import util.Operation;
 
@@ -46,6 +48,10 @@ public class RestApiRM {
         
     }
     
+    /**
+     * send an ack to ReaderWriter
+     * @return 
+     */
     @GET
     @Path("/sendAck") 
     @Produces(MediaType.TEXT_PLAIN)
@@ -53,8 +59,8 @@ public class RestApiRM {
         return  replicaManager.sendAck();
     }
     /**
-     * get di tutti i valori
-     * @return tutti i valori nel database
+     * Get of all elements of rm
+     * @return 
      */
     @GET
     @Path("/all")
@@ -72,9 +78,9 @@ public class RestApiRM {
      }
      
     /**
-     * restituzione di tutti i valori che hanno un determinato nome
+     * Get the elements of name {name} 
      * @param name
-     * @return 
+     * @return all the elements of name {name}
      */ 
     @GET
     @Path("/op/{name}")
@@ -94,9 +100,9 @@ public class RestApiRM {
     }
     
     /**
-     * restituzione ordinata di tutti i valori di una determinata operazione
+     * Get the elements of name {name} ordered by insert
      * @param name
-     * @return tutte le operazioni di uno stesso tipo, ordinata per id
+     * @return all elements of name {name} ordered by insert
      */
     @GET
     @Path("/ord/{name}")
@@ -115,17 +121,52 @@ public class RestApiRM {
        return "[]";
     }
     
+    /**
+     * Insert new element
+     * @param name
+     * @param value 
+     */
     @POST
     @Path("/add")
     @Consumes(MediaType.TEXT_PLAIN)
-    public void add(String name, String value){
-        Operation op = new Operation(name,value);
-        //Client client = ClientBuilder.newClient(); 
-        //client.target("http://localhost:8080/ReaderWriter-web/risorse/writer/add").path(name).path(value).request(MediaType.TEXT_PLAIN).get(String.class);
-        replicaManager.addOp(op);
+    public void add(String u){
         
+       // Operation op = new Operation(new Gson,value);
+       replicaManager.printLog(u);
+       //replicaManager.sendAck();
+  
+       Operation op = new Gson().fromJson(u, Operation.class);
+   
+        replicaManager.addOp(op);
+     
     }
     
+    @POST
+    @Path("/sendAbort")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void sendAbort(String log)
+    {
+      boolean flag;
+      flag = replicaManager.printLog(log);
+      flag = false;
+       
+    }
+    
+    
+    
+    @POST
+    @Path("/addLog")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response addLog(String u){
+        
+        //String result = "" + op;
+        
+        boolean result = replicaManager.printLog(u);
+        
+        
+            
+        return Response.status(200).entity(result).build();
+    }
     
     
     

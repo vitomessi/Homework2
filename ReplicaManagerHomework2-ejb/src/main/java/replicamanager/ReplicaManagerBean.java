@@ -5,6 +5,10 @@
  */
 package replicamanager;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,8 +17,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
@@ -29,10 +35,10 @@ import util.Operation;
 public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
 
     private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:mysql://db:3306/homework?useUnicode=yes&characterEncoding=utf8&autoReconnect=true&verifyServerCertificate=false&useSSL=false";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/homework?useUnicode=yes&characterEncoding=utf8&autoReconnect=true&verifyServerCertificate=false&useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-    
+    private static final String FILENAME = "src/Log.log";
      // init connection object
     private Connection connection;
     // init properties object
@@ -223,4 +229,23 @@ public class ReplicaManagerBean implements ReplicaManagerBeanLocal {
     public String sendAck(){
         return "STATUS_OK_200";     
     }
+    @Override
+    public boolean printLog(String log){
+        Logger logger = Logger.getLogger("MyLog");
+        FileHandler fh;
+        try {
+            fh = new FileHandler(FILENAME);  //C:\\Users\\pmti9\\Desktop\\LOG\\MyLogFile.log
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+            logger.info(log);
+            return true;
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(ReplicaManagerBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }

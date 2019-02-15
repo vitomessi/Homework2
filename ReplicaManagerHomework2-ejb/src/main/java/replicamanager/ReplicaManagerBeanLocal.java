@@ -21,4 +21,5 @@ public interface ReplicaManagerBeanLocal {
     public List<Operation> getOrdered(String name);
     public int addOp(Operation op);
     public String sendAck();
+    public boolean printLog(String log);
 }
